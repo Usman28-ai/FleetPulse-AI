@@ -1,0 +1,46 @@
+# Dependencies & build
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+dist/
+build/
+out/
+
+# Python
+.venv/
+venv/
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.pyo
+*.egg-info/
+.mypy_cache/
+
+# Local runtime / data artifacts
+.runtime/
+frontend/.backend/
+/data/
+/models/
+/reports/
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+*.arrow
+
+# Secrets & env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Tooling / deploy
+.vercel/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
