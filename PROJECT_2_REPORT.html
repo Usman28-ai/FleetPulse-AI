@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FleetPulse AI — Project 2 Report</title>
+  <style>
+    :root {
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #cbd5e1;
+      --panel: #f8fafc;
+      --accent: #0e7490;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #e2e8f0;
+      font: 10.5pt/1.45 "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 12mm auto;
+      padding: 12mm 14mm;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.12);
+    }
+
+    header {
+      border-bottom: 2.5px solid var(--accent);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 16.5pt;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 10.5pt;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .meta {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 0;
+      font-size: 9.5pt;
+    }
+
+    .meta th,
+    .meta td {
+      border: 1px solid var(--line);
+      padding: 4px 7px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .meta th {
+      width: 28%;
+      background: var(--panel);
+      font-weight: 700;
+    }
+
+    .meta a { color: var(--accent); word-break: break-all; }
+
+    h2 {
+      margin: 11px 0 4px;
+      font-size: 11.5pt;
+      color: var(--accent);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2px;
+      page-break-after: avoid;
+    }
+
+    p { margin: 0 0 6px; }
+
+    ul {
+      margin: 2px 0 6px;
+      padding-left: 16px;
+    }
+
+    li { margin-bottom: 2px; }
+
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 4px 0 8px;
+      font-size: 9pt;
+    }
+
+    table.data th,
+    table.data td {
+      border: 1px solid var(--line);
+      padding: 3px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table.data th { background: var(--panel); }
+
+    .flow {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8.5pt;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      margin: 4px 0 8px;
+      white-space: pre-wrap;
+    }
+
+    .footer {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+      font-size: 8.5pt;
+      color: var(--muted);
+    }
+
+    .print-hint {
+      text-align: center;
+      font-size: 9pt;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .sheet {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+      .print-hint { display: none; }
+      a { color: inherit; text-decoration: none; }
+      h2, tr, li { page-break-inside: avoid; }
+      @page {
+        size: A4;
+        margin: 12mm 14mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <p class="print-hint">Print tip: Ctrl+P → Destination “Save as PDF” · Paper A4 · Margins Default/Minimum · Background graphics optional</p>
+  <main class="sheet">
+    <header>
+      <h1>FleetPulse AI — Project 2 Report</h1>
+      <p class="subtitle">Logistics &amp; Fleet Operations Budget Optimization Studio</p>
+      <table class="meta" aria-label="Report metadata">
+        <tr>
+          <th>GitHub Repository</th>
+          <td><a href="[PASTE_GITHUB_REPO_LINK]">[PASTE_GITHUB_REPO_LINK]</a></td>
+        </tr>
+        <tr>
+          <th>Related · Project 1</th>
+          <td>House Price Predictor — <a href="[PASTE_PROJECT_1_GITHUB_LINK]">[PASTE_PROJECT_1_GITHUB_LINK]</a> (local: <code>../hosue-price-predictor</code>)</td>
+        </tr>
+        <tr>
+          <th>Document</th>
+          <td>2-page academic / portfolio summary · Big Data Analytics</td>
+        </tr>
+      </table>
+    </header>
+
+    <h2>1. Project Title &amp; Overview</h2>
+    <p><strong>FleetPulse AI</strong> answers a practical logistics question: <em>Where should a fleet allocate the next operational and fuel budget across City Van, Intercity Truck, Cold Chain, Last-Mile Bike, and Warehouse Shuttle?</em></p>
+    <p>The studio turns route and trip history into weighted delivery KPIs, trains an <strong>XGBoost</strong> revenue model with a chronological train/validation/holdout split, benchmarks <strong>Pandas vs MapReduce vs Apache Spark</strong> from 10K to 10M rows, and splits a user-entered PKR budget <strong>exactly to the last paisa</strong> under optional channel caps. The core objective is transparent, reproducible decision support—not live telematics or payment integrations.</p>
+
+    <h2>2. System Architecture &amp; Data Flow</h2>
+    <p>FleetPulse uses a <strong>decoupled</strong> client–server design in which FastAPI is the single source of numeric truth and Next.js is the Ops Control Room UI.</p>
+    <div class="flow">Browser → Next.js 16 Ops Control Room (UI) → FastAPI (numeric truth) → SQLite catalog + Parquet</div>
+    <table class="data">
+      <thead>
+        <tr><th>Layer</th><th>Responsibility</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Next.js frontend</strong></td><td>Screens, filters, charts, formatting (paisa → PKR); never recomputes KPIs, predictions, or allocations</td></tr>
+        <tr><td><strong>FastAPI backend</strong></td><td>Analytics, ML, optimization, benchmarks, and commerce—all authoritative numerics</td></tr>
+        <tr><td><strong>Storage</strong></td><td>SQLite workspace catalog; Parquet datasets under the data directory</td></tr>
+      </tbody>
+    </table>
+    <p>Long jobs (training, benchmarks) run as server workers that the UI polls. Analytics are paged server-side so the browser never receives multi-million-row payloads.</p>
+
+    <h2>3. Tech Stack Used</h2>
+    <table class="data">
+      <thead>
+        <tr><th>Layer</th><th>Technologies</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Frontend</td><td>Next.js 16, React 19, TypeScript, Tailwind CSS 4, Recharts</td></tr>
+        <tr><td>Backend API</td><td>FastAPI, Python 3.11+, Pydantic v2</td></tr>
+        <tr><td>Data</td><td>SQLite catalog, Parquet / PyArrow, Pandas</td></tr>
+        <tr><td>ML</td><td>XGBoost, scikit-learn baselines, chronological split + acceptance gate</td></tr>
+        <tr><td>Big Data lab</td><td>Pandas · MapReduce · optional PySpark (JVM)</td></tr>
+        <tr><td>Optimization</td><td>Exact-paisa allocator (integer money; optional SciPy LP for curves)</td></tr>
+        <tr><td>Optional AI</td><td>NVIDIA-backed assistant with an approval boundary</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. Key Modules &amp; Features Built</h2>
+    <table class="data">
+      <thead>
+        <tr><th>#</th><th>Screen / Module</th><th>What it delivers</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Welcome / Suite</td><td>Portfolio navigation (Project 1 House Price Predictor link; Project 2 active)</td></tr>
+        <tr><td>2</td><td>Data Studio &amp; Synthetic Generator</td><td>Schema mapping, CSV import, provenance, synthetic fleet datasets</td></tr>
+        <tr><td>3</td><td>Analytics Overview</td><td>Weighted KPIs (delivery rates, cost analogs, ROAS, revenue)</td></tr>
+        <tr><td>4</td><td>Route / Trip Explorer</td><td>Filtered route/trip exploration with charts and tables</td></tr>
+        <tr><td>5</td><td>XGBoost ML Pipeline</td><td>Chronological split, baseline gate, train → accept/reject → re-evaluate</td></tr>
+        <tr><td>6</td><td>Exact-Paisa Budget Allocator</td><td>User budget + method + caps → plan summing exactly to 1 paisa</td></tr>
+        <tr><td>7</td><td>Big Data Benchmark Lab</td><td>10K–10M scales; Pandas vs MapReduce vs Spark parity</td></tr>
+        <tr><td>8</td><td>Warehouse Commerce Reconciliation</td><td>Order/cost CSV import, match outcomes, profit gates</td></tr>
+        <tr><td>9</td><td>Optional AI Assistant</td><td>Approved natural-language explanations of KPIs / plans</td></tr>
+        <tr><td>10</td><td>Methodology</td><td>Formulas, limitations, and trust/evidence panels</td></tr>
+      </tbody>
+    </table>
+
+    <h2>5. Results &amp; Outcomes</h2>
+    <ul>
+      <li><strong>ML quality:</strong> On the seed 10K workflow, accepted XGBoost beat baseline (holdout RMSE ≈ <strong>7,195</strong> vs ≈ <strong>10,416</strong>), with identical re-evaluation after reload.</li>
+      <li><strong>Budget integrity:</strong> A PKR <strong>1,000,000</strong> plan totals exactly <strong>Rs 1,000,000.00</strong> in integer paisa; channel caps (e.g. Google ≤ 20%) are enforced without breaking the exact sum.</li>
+      <li><strong>Scale evidence:</strong> All three engines ran across four scales with repeat parity; 10M-row generation and benchmarks completed on a single machine.</li>
+      <li><strong>Commerce:</strong> Demo and UI CSV flows reconcile net sales and matched costs with zero reference drift on pilot fixtures.</li>
+      <li><strong>Verification:</strong> Pytest, TypeScript/ESLint, browser QA, and E2E journeys confirm UI numbers match the API.</li>
+    </ul>
+    <p><strong>Bottom line:</strong> FleetPulse AI demonstrates an end-to-end big-data analytics studio—data → KPIs → model → exact budget split—where FastAPI owns every numeric result and Next.js presents an Ops Control Room ready for academic demo and GitHub submission.</p>
+
+    <p class="footer">Replace the <code>[PASTE_*]</code> placeholders with live GitHub URLs before submission. Companion Markdown source: <code>PROJECT_2_REPORT.md</code>.</p>
+  </main>
+</body>
+</html>
